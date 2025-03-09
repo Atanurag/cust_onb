@@ -10,8 +10,12 @@ import { faPhone, faUser, faCity } from "@fortawesome/free-solid-svg-icons";
 import { Avatar } from "antd";
 import dayjs from 'dayjs';
 import { handleAPICall, notificationDisplay } from "./utils";
+import OtpInput from 'react-otp-input';
+
 function App() {
     //const { urlOrigin, clientImageName } = useContext(UrlContext);
+    const [otp, setOtp] = useState('');
+
     const [showOtpForm, setShowOtpForm] = useState(false);
     const [isLoginClicked, setIsLoginClicked] = useState(false);
     const [isOtpSubmitClicked, setIsOtpSubmitClicked] = useState(false);
@@ -42,11 +46,11 @@ function App() {
     // };
 
 
-    const otpEnterKeyTrigger = (e) => {
-    if (e.key === 'Enter') {
+    const handleKeyDown = (e) => {
+      if (e.key === "Enter") {
         e.preventDefault();
-        otpformRef.current.submit();
-    }
+        handleSubmit(); // Call submit function
+      }
     };
     const onFinish = (values) => {
       notificationDisplay('error', 'success')
@@ -222,20 +226,19 @@ function App() {
     <div style={{ marginBottom: 24 }}>Verify your OTP</div>
     
     <Form.Item name="otp" rules={[{ validator: async () => Promise.resolve() }]}>
-        <InputOTP
-            autoFocus={true}
-            className="custom-otp-input"
-            inputType="numeric"
-            onKeyDown={(e) => {
-                if (e.key === "Backspace" && !e.target.value) {
-                    const prevInput = e.target.previousElementSibling;
-                    if (prevInput) {
-                        prevInput.focus(); // Move focus to the previous input field
-                    }
-                }
-                otpEnterKeyTrigger(e);
-            }}
-        />
+    <div style={styles.container}>
+      <OtpInput
+        value={otp}
+        onChange={setOtp}
+        numInputs={6}
+        inputType="tel" // Prevents increment/decrement arrows
+        renderSeparator={<span>&nbsp;&nbsp;</span>}
+        renderInput={(props) => <input {...props} style={styles.input} onKeyDown={handleKeyDown} />
+      }
+        shouldAutoFocus={true}
+      />
+    </div>
+
     </Form.Item>
 
     <Form.Item>
@@ -283,29 +286,46 @@ const styles = {
   container: {
     display: "flex",
     justifyContent: "center",
-    alignItems: "center",
-    //height: "100vh",
-    borderRadius:'8px',
-    background: '#fff'
+    margin: "2px 0",
   },
-  card: {
+  input: {
+    width: "25px",
+    height: "25px",
+    fontSize: "18px",
     textAlign: "center",
-    padding: "20px",
-    borderRadius: "10px",
-    boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
-    width: "90%",
-    maxWidth: "350px",
-  },
-  icon: {
-    fontSize: "50px",
-    marginBottom: "10px",
-  },
-  title: {
-    color: "#333",
-  },
-  text: {
-    color: "#555",
+    border: "2px solid #b4b0b0",
+    borderRadius: "4px",
+    outline: "none",
   },
 };
+
+// const styles = {
+//   container: {
+//     display: "flex",
+//     justifyContent: "center",
+//     alignItems: "center",
+//     //height: "100vh",
+//     borderRadius:'8px',
+//     background: '#fff'
+//   },
+//   card: {
+//     textAlign: "center",
+//     padding: "20px",
+//     borderRadius: "10px",
+//     boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+//     width: "90%",
+//     maxWidth: "350px",
+//   },
+//   icon: {
+//     fontSize: "50px",
+//     marginBottom: "10px",
+//   },
+//   title: {
+//     color: "#333",
+//   },
+//   text: {
+//     color: "#555",
+//   },
+// };
 export default App;
 
