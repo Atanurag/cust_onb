@@ -246,7 +246,7 @@ function App() {
                             // rules={[{ validator: async () => Promise.resolve() }]}
                         >
                             <Input
-                            
+                            type='tel'
                             tabIndex={0}
                             suffix={<FontAwesomeIcon icon={faPhone}
                              className="site-form-item-icon" />}
