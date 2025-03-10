@@ -1,8 +1,9 @@
 
 import { useEffect, useContext, useState, useRef } from "react";
 import '@ant-design/v5-patch-for-react-19';
+import cities from '../cities.json'
 //import { useHistory } from "react-router-dom";
-import { Form, Input, Button,Card,Typography,Cascader} from "antd";
+import { Form, Input, Button,Card,Typography,Cascader,Select} from "antd";
 import { InputOTP } from "antd-input-otp";
 import "./login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,6 +24,20 @@ function App() {
     const [globalUsname, setGlobalUsname] = useState("");
     const [inputDisabled ,setInputDisabled] = useState(false);
     const [isOnboarded, setIsOnboarded] = useState(false);
+    function convertAPIDataToSelectData(data, selFor){
+      let selectData = data.map(item => {
+          return {
+              label: item.name,
+              value: (selFor === "state" ? item.id : item.id),
+              key: (selFor === "region" ? item.state_id : item.id),
+              //erpCode: (clientImageName === 'fuelsense' || clientImageName === 'gogas1') ? item.erp_code : null,
+              //address: (selFor === "station" ? `${item.address}, ${item.pincode}` : null)
+          }
+      });
+      return selectData;
+  }
+  const [cityData, setCityData] = useState(convertAPIDataToSelectData(cities))
+
     //let history = useHistory();
     // const onFinish = (values) => {
     //     const url = `${urlOrigin}/api-token-auth/`;
@@ -75,6 +90,7 @@ function App() {
     const onFinish = (values) => {
       notificationDisplay('error', 'success')
       console.log('clicked')
+      setShowOtpForm(true)
         // let url = `${urlOrigin}/api/v1/user/user-verification-with-password/ `;
         // setGlobalUsname(values.username)
         // let postObj = {
@@ -143,7 +159,7 @@ function App() {
 
       }
 
-
+      
     // Let the user skip the login if they already have a token set
     useEffect(() => {
         document.title = "Welcome to FuelSense";
@@ -248,23 +264,19 @@ function App() {
                             name="city"
                         >
 
-<Cascader
-        tabIndex={0}
-        options={[
-            { value: 'All', label: 'All' },
-            { value: 'Region', label: 'Region'},
-            { value: 'City', label: 'City' },
-            { value: 'Station', label: 'Station' },
-        ]}
-        value={'All'}
-        onChange={(e) => {
-            
-        }}
-        allowClear={false}
-    />
+<Select
+                        showSearch
+                        style={{width: '-webkit-fill-available'}}
+                        placeholder="Select your city"
+                        optionFilterProp="children"
+                        //defaultValue={selectedState}
+                        //onChange={(val) => onChange(val,'state')}
+                        filterOption={(input, option) =>
+                        (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                        }
+                        options={cityData}
+                    />
 
-
-                            <Input suffix={<FontAwesomeIcon icon={faCity} className="site-form-item-icon" />} placeholder="City Name" />
                         </Form.Item>
                         <Form.Item>
                             <Button type="primary" htmlType="submit" disabled={isLoginClicked} className="login-box-form-button">
