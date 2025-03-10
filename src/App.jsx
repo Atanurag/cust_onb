@@ -242,14 +242,6 @@ function App() {
                                     required: true,
                                     message: 'Please input your OTP!',
                                 },
-                                {
-                                  validator: (_, value) => {
-                                      if (value && value.length !== 6) {
-                                          return Promise.reject(new Error('OTP must be 6 digits!'));
-                                      }
-                                      return Promise.resolve();
-                                  },
-                              },
                             ]}>
     <div style={styles.container}>
       <OtpInput
