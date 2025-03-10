@@ -45,11 +45,16 @@ function App() {
     //     })        
     // };
 
-
     const handleKeyDown = (e) => {
       if (e.key === "Enter") {
         e.preventDefault();
-        otpformRef.current.submit(); // Call submit function
+        otpformRef.current.submit(); 
+      }
+      if (e.key === "Backspace") {
+        e.preventDefault();
+        const newOtp = [...otp];
+        newOtp[index] = "";
+        setOtp(newOtp);
       }
     };
     const onFinish = (values) => {
@@ -252,7 +257,9 @@ function App() {
         numInputs={6}
         inputType="tel"
         renderSeparator={<span>&nbsp;&nbsp;&nbsp;</span>}
-        renderInput={(props) => <input {...props} style={styles.otpInput} onKeyDown={handleKeyDown} />
+        renderInput={(props) => <input {...props} style={styles.otpInput} 
+        onKeyDown={(e) => handleKeyDown(e, index)}
+        />
       }
         shouldAutoFocus={true}
       />
