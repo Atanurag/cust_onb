@@ -49,7 +49,7 @@ function App() {
     const handleKeyDown = (e) => {
       if (e.key === "Enter") {
         e.preventDefault();
-        handleSubmit(); // Call submit function
+        otpformRef.current.submit(); // Call submit function
       }
     };
     const onFinish = (values) => {
@@ -76,6 +76,7 @@ function App() {
 
     }
     const handleOtp = (value) => {
+      console.log('submitted')
         // let url = `${urlOrigin}/api/v1/user/otp-verification/`;
         // let postObj = {
         //     username: globalUsname,
@@ -225,13 +226,18 @@ function App() {
                        <Form ref={otpformRef} onFinish={handleOtp} className="otp-form">
     <div style={{ marginBottom: 24 }}>Verify your OTP</div>
     
-    <Form.Item name="otp" rules={[{ validator: async () => Promise.resolve() }]}>
+    <Form.Item name="otp" rules={[
+                                {
+                                    required: true,
+                                    message: 'Please input your OTP!',
+                                },
+                            ]}>
     <div style={styles.container}>
       <OtpInput
         value={otp}
         onChange={setOtp}
         numInputs={6}
-        inputType="tel" // Prevents increment/decrement arrows
+        inputType="tel"
         renderSeparator={<span>&nbsp;&nbsp;</span>}
         renderInput={(props) => <input {...props} style={styles.input} onKeyDown={handleKeyDown} />
       }
