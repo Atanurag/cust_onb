@@ -52,9 +52,24 @@ function App() {
       }
       if (e.key === "Backspace") {
         e.preventDefault();
+        
+        // Clone the OTP array
         const newOtp = [...otp];
-        newOtp[index] = "";
-        setOtp(newOtp);
+    
+        // If the current input is empty, move focus to the previous input
+        if (!newOtp[index] && index > 0) {
+          newOtp[index - 1] = ""; // Clear the previous input
+          setOtp(newOtp);
+    
+          // Move focus back to the previous input
+          setTimeout(() => {
+            document.querySelectorAll("input")[index - 1].focus();
+          }, 10);
+        } else {
+          // Otherwise, just clear the current input
+          newOtp[index] = "";
+          setOtp(newOtp);
+        }
       }
     };
     const onFinish = (values) => {
