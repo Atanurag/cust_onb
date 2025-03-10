@@ -55,7 +55,6 @@ function App() {
     const onFinish = (values) => {
       notificationDisplay('error', 'success')
       console.log('clicked')
-      setShowOtpForm(true)
         // let url = `${urlOrigin}/api/v1/user/user-verification-with-password/ `;
         // setGlobalUsname(values.username)
         // let postObj = {
@@ -94,6 +93,7 @@ function App() {
         //         }
         //         handleAPICall(Authurl, "POST", postAuthObj).then(authRes => {
         //             if (authRes.status && authRes.status.toLowerCase() === "success") {
+          //               setIsOnboarded(true);
         //                 localStorage.setItem('token', authRes.token);
         //                 localStorage.setItem('userName', authRes.user_name);
         //                 localStorage.setItem('email', authRes.email);
@@ -234,6 +234,8 @@ function App() {
 
                     :
                     <div className="otp-box-form"  >
+                       
+                       
                        <Form ref={otpformRef} onFinish={handleOtp} className="otp-form">
     <div style={{ marginBottom: 24 }}>Verify your OTP</div>
     
@@ -243,14 +245,14 @@ function App() {
                                     message: 'Please input your OTP!',
                                 },
                             ]}>
-    <div style={styles.container}>
+    <div style={styles.otpContainer}>
       <OtpInput
         value={otp}
         onChange={setOtp}
         numInputs={6}
         inputType="tel"
         renderSeparator={<span>&nbsp;&nbsp;</span>}
-        renderInput={(props) => <input {...props} style={styles.input} onKeyDown={handleKeyDown} />
+        renderInput={(props) => <input {...props} style={styles.otpInput} onKeyDown={handleKeyDown} />
       }
         shouldAutoFocus={true}
       />
@@ -264,8 +266,8 @@ function App() {
             htmlType="submit"
             disabled={isOtpSubmitClicked}
             loading={false}
-            className="otp-box-form-button"
-        >
+            className="login-box-form-button"
+            >
             Submit
         </Button>
     </Form.Item>
@@ -300,17 +302,17 @@ function App() {
 }
 
 const styles = {
-  container: {
+  otpContainer: {
     display: "flex",
     justifyContent: "center",
     margin: "2px 0",
   },
-  input: {
+  otpInput: {
     width: "25px",
     height: "25px",
-    fontSize: "18px",
+    fontSize: "16px",
     textAlign: "center",
-    border: "2px solid #b4b0b0",
+    border: "1px solid #b4b0b0",
     borderRadius: "4px",
     outline: "none",
   },
@@ -326,6 +328,8 @@ const styles = {
 //     background: '#fff'
 //   },
 //   card: {
+   
+//   fontFamily: 'Exo, sans-serif',
 //     textAlign: "center",
 //     padding: "20px",
 //     borderRadius: "10px",
@@ -334,7 +338,7 @@ const styles = {
 //     maxWidth: "350px",
 //   },
 //   icon: {
-//     fontSize: "50px",
+//     fontSize: "40px",
 //     marginBottom: "10px",
 //   },
 //   title: {
