@@ -251,7 +251,7 @@ function App() {
         onChange={setOtp}
         numInputs={6}
         inputType="tel"
-        renderSeparator={<span>&nbsp;&nbsp;</span>}
+        renderSeparator={<span>&nbsp;&nbsp;&nbsp;</span>}
         renderInput={(props) => <input {...props} style={styles.otpInput} onKeyDown={handleKeyDown} />
       }
         shouldAutoFocus={true}
