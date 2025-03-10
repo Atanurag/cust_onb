@@ -2,7 +2,7 @@
 import { useEffect, useContext, useState, useRef } from "react";
 import '@ant-design/v5-patch-for-react-19';
 //import { useHistory } from "react-router-dom";
-import { Form, Input, Button,Card,Typography} from "antd";
+import { Form, Input, Button,Card,Typography,Cascader} from "antd";
 import { InputOTP } from "antd-input-otp";
 import "./login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -200,7 +200,7 @@ function App() {
                         <p><span style={{color:'#0068AC',fontWeight:700, display:'block'}}>1M+ </span>Satisfied Customers</p>
                     </div> */}
                 </div>
-                {showOtpForm ? <div className="login-box-form">
+                {!showOtpForm ? <div className="login-box-form">
                     <Form
                         name="normal_login"
                         className="login-form"
@@ -214,7 +214,10 @@ function App() {
                             name="Customer Name"
                             
                         >
-                            <Input suffix={<FontAwesomeIcon icon={faUser} className="site-form-item-icon" />} placeholder="Name" />
+                            <Input
+                            
+                            tabIndex={0}
+                            suffix={<FontAwesomeIcon icon={faUser} className="site-form-item-icon" />} placeholder="Name" />
                         </Form.Item>
                         <Form.Item
                             name="number"
@@ -226,7 +229,10 @@ function App() {
                             ]}
                             // rules={[{ validator: async () => Promise.resolve() }]}
                         >
-                            <Input suffix={<FontAwesomeIcon icon={faPhone} className="site-form-item-icon" />} onKeyDown={(event) => {
+                            <Input
+                            
+                            tabIndex={0}
+                            suffix={<FontAwesomeIcon icon={faPhone} className="site-form-item-icon" />} onKeyDown={(event) => {
                                     const isNumericKey = /[0-9]/.test(event.key);
                                     const isControlKey = event.key === "Backspace" || event.key === "Delete" || event.ctrlKey || event.metaKey;
                                     if (!isNumericKey && !isControlKey) {
@@ -241,6 +247,23 @@ function App() {
                         <Form.Item
                             name="city"
                         >
+
+<Cascader
+        tabIndex={0}
+        options={[
+            { value: 'All', label: 'All' },
+            { value: 'Region', label: 'Region'},
+            { value: 'City', label: 'City' },
+            { value: 'Station', label: 'Station' },
+        ]}
+        value={'All'}
+        onChange={(e) => {
+            
+        }}
+        allowClear={false}
+    />
+
+
                             <Input suffix={<FontAwesomeIcon icon={faCity} className="site-form-item-icon" />} placeholder="City Name" />
                         </Form.Item>
                         <Form.Item>
