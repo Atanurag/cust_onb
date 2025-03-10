@@ -134,18 +134,29 @@ function App() {
     }, []);
     useEffect(() => {
       const handleBackButton = (event) => {
-          if (!showOtpForm) { // If OTP screen is active
-              event.preventDefault(); // Prevent default back behavior
-              setShowOtpForm(true); // Show the previous section instead
-          }
+        if (!showOtpForm) {
+          event.preventDefault(); // Stop default back navigation
+          setShowOtpForm(true); // Show the previous section
+          window.history.pushState(null, "", window.location.href); // Prevent browser exit
+        }
       };
-  
-      window.addEventListener("popstate", handleBackButton);
-  
+    
+      const handlePopState = () => {
+        if (!showOtpForm) {
+          setShowOtpForm(true);
+          window.history.pushState(null, "", window.location.href); // Stop page exit
+        }
+      };
+    
+      window.addEventListener("popstate", handlePopState);
+      document.addEventListener("backbutton", handleBackButton); // Android hardware back button
+    
       return () => {
-          window.removeEventListener("popstate", handleBackButton);
+        window.removeEventListener("popstate", handlePopState);
+        document.removeEventListener("backbutton", handleBackButton);
       };
-  }, [showOtpForm]);
+    }, [showOtpForm]);
+    
     return (
         <div className="login-background" >
 
