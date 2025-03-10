@@ -248,13 +248,20 @@ function App() {
                             <Input
                             
                             tabIndex={0}
-                            suffix={<FontAwesomeIcon icon={faPhone} className="site-form-item-icon" />} onKeyDown={(event) => {
-                                    const isNumericKey = /[0-9]/.test(event.key);
-                                    const isControlKey = event.key === "Backspace" || event.key === "Delete" || event.ctrlKey || event.metaKey;
-                                    if (!isNumericKey && !isControlKey) {
-                                        event.preventDefault();
-                                    }
-                                }} 
+                            suffix={<FontAwesomeIcon icon={faPhone}
+                             className="site-form-item-icon" />}
+                             
+                             onKeyDown={(event) => {
+                              const isNumericKey = /[0-9.]/.test(event.key);
+                              const isControlKey = event.key === "Backspace" || event.key === "Delete" || event.ctrlKey || event.metaKey;
+                              const isTabKey = event.key === "Tab";
+                              const inputValue = event.target.value;
+                              const hasDot = inputValue.includes('.');
+                          
+                              if ((!isNumericKey && !isControlKey && !isTabKey) || (event.key === '.' && hasDot)) {
+                                  event.preventDefault();
+                              }
+                          }}
                                 // onKeyDown={(event) => {
                                 //     if (!/[0-9]/.test(event.key) && event.key !== "Backspace" && event.key !== "Delete") { event.preventDefault(); }
                                 // }} 
