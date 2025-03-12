@@ -217,7 +217,8 @@ function App() {
                     </div> */}
                 </div>
                 {!showOtpForm ? <div className="login-box-form">
-                    <Form
+                <Form
+                    layout="vertical"
                         name="normal_login"
                         className="login-form"
                         initialValues={{
@@ -225,24 +226,27 @@ function App() {
                         }}
                         onFinish={onFinish}
                     >
-                        <div style={{ marginBottom: 24 }}>Enter your details</div>
+                        <div style={{ marginBottom: 12 }}>Enter your details</div>
                         <Form.Item
-                            name="Customer Name"
-                            
+                        label='Name'
+                            name="customer_name"
+                            style={{ marginBottom:10 }}
                         >
                             <Input
-                            
+                            placeholder='Customer Name' 
                             tabIndex={0}
-                            suffix={<FontAwesomeIcon icon={faUser} className="site-form-item-icon" />} placeholder="Name" />
+                            suffix={<FontAwesomeIcon icon={faUser} className="site-form-item-icon" />} />
                         </Form.Item>
                         <Form.Item
+                        label={'Phone number'}
                             name="number"
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your Phone Number!',
+                                    message: 'Please enter your Phone Number!',
                                 },
                             ]}
+                            style={{ marginBottom:10}}
                             // rules={[{ validator: async () => Promise.resolve() }]}
                         >
                             <Input
@@ -265,10 +269,12 @@ function App() {
                                 // onKeyDown={(event) => {
                                 //     if (!/[0-9]/.test(event.key) && event.key !== "Backspace" && event.key !== "Delete") { event.preventDefault(); }
                                 // }} 
-                                minLength={10} maxLength={10} disabled={inputDisabled} placeholder="Phone Number"/>
+                                minLength={10} maxLength={10} disabled={inputDisabled} placeholder="+91"/>
                         </Form.Item>
                         <Form.Item
+                        label='City'
                             name="city"
+                            style={{ marginBottom:10}}
                         >
 
 <Select
@@ -286,8 +292,8 @@ function App() {
 
                         </Form.Item>
                         <Form.Item>
-                            <Button type="primary" htmlType="submit" disabled={isLoginClicked} className="login-box-form-button">
-                                Submit
+                            <Button type="primary" htmlType="submit" loading={isLoginClicked} disabled={isLoginClicked} className="login-box-form-button">
+                                Continue
                             </Button>
                         </Form.Item>
                     </Form>
